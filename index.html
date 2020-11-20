@@ -1,12 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Weather Dashboard</title>
 </head>
+
 <body>
-    
+
+    <!-- Main Bootstrap Search -->
+    <div class="container">
+
+        <!-- Jumbotron for Title -->
+        <div class="jumbotron" style="background-color: red ; color: white;">
+            <h1 class="text-center">
+                <strong>
+                    <i class="fa fa-newspaper-o"></i>Weather Forecast</strong>
+            </h1>
+        </div>
+
+        <!-- Row for Searching New York Times -->
+        <div class="row">
+            <div class="col-sm-12">
+                <br>
+                <!-- First card is for handling the search parameters -->
+                <div class="card">
+                    <div class="card-header">
+                        <strong>
+                            <i class="fa fa-list-alt"></i> Search Parameters</strong>
+                    </div>
+                    <div class="card-body">
+                        <div id="container">
+                            <!-- Here we create an HTML Form for handling the inputs-->
+                            <form id="formBox" role="form">
+
+                                <!-- Here we create the text box for capturing the search term-->
+                                <div class="form-group">
+                                    <label for="search">Search City:</label>
+                                    <input type="text" class="form-control" id="search-term">
+
+
+
+                                    <!-- Here we have our final submit button -->
+                                    <button type="submit" id="search-button" current-weather="search">Search</button>
+
+
+                                     <button current-weather="clearResults">Clear Results</button> 
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- This row will handle all of the retrieved articles -->
+        <div class="row">
+            <div class="col-sm-12">
+                <br>
+
+                <!-- This card will initially be made up of a card and wells for each of the articles retrieved -->
+                <div class="card">
+
+                    <!-- card Heading for the retrieved articles box -->
+                    <div class="card-header">
+
+                        <strong>
+                            <i class="fa fa-table"></i>Weather information</strong>
+                            <div class="current"></div>
+                    </div>
+                    <div class="future"></div>
+
+                    <!-- This main card will hold each of the resulting articles -->
+                    <div class="card-body" id="article-section">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Region -->
+        <div class="row">
+            <div class="col-sm-12">
+
+
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+    <script src="weather.js"></script>
+
 </body>
+
 </html>
-<script src="weather.js"></script>
