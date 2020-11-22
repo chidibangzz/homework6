@@ -21,6 +21,9 @@ $(document).ready(function () {
     function searchWeather() {
         var searchValue = $("#search-term").val();
         var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + searchValue + "&appid=9eb51aba9e5654b6e1bc5b9934efaba8&units=imperial";
+
+        var futureQueryURL = "http:api.openweathermap.org/data/2.5/forecast?q=" + searchValue + "&appid=9eb51aba9e5654b6e1bc5b9934efaba8&units=imperial"
+
         $.ajax({
             //specifies the type of request from the ajax
             
@@ -30,6 +33,9 @@ $(document).ready(function () {
     
             //just grabbing values from ajax here than console logged it
         }) .then( function (response) {
+            //local storage
+            
+
             console.log(response);
             //grabs the name of the city
             response.name
@@ -67,29 +73,70 @@ $(document).ready(function () {
             })
             response.coord.lon
             response.coord.lat
-            $(".current").append(`<div>Longitude: ${response.coord.lon}</div>`);
-            $(".current").append(`<div>Lattitude: ${response.coord.lat}</div>`);
-
-            $(".future").append(`<h1> View Future Forecasts</h1>`);
+            
+            
              
             //ajax for future forecast
 
             
-            var futureQueryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + futureFor + "austin&appid=9eb51aba9e5654b6e1bc5b9934efaba8&units=imperial";
+
+
             $.ajax({
                     //specifies the type of request from the ajax
                     
                     //attaching searchVal and api key which we just created and here we are spefiying the request
-                    url: futureQueryURL,
+                    url: dataQueryURL,
                     method: "GET"
                 })
-               
+                .then(function (response) {
+
+                    var currentUV = $(".current").append("<p>" + "UV Index: " + response.value + "</p>").addClass("card-text");
+                    currentUV.addClass("UV");
+                    currentTemp.append(currentUV);
+                    // currentUV.append("UV Index: " + response.value);
+
+                    var local = localStorage.setItem(keyCount, response.name);
+            keyCount = keyCount + 1;
+
+            })
+        }); 
 
 
-        })
-       
+
+
+        $.ajax({
+            url: futureQueryURL,
+            method: "GET"
+        }).then(function (response) {
+            // Array for 5-days 
+            var day = [0, 8, 16, 24, 32];
+            var fiveDayCard = $(".fiveDayCard").addClass("card-body");
+            var fiveDayDiv = $(".fiveDayOne").addClass("card-text");
+            fiveDayDiv.empty();
+            // For each for 5 days
+            day.forEach(function (i) {
+                var FiveDayTimeUTC1 = new Date(response.list[i].dt * 1000);
+                FiveDayTimeUTC1 = FiveDayTimeUTC1.toLocaleDateString("en-US");
+
+                fiveDayDiv.append("<div class=fiveDayColor>" + "<p>" + FiveDayTimeUTC1 + "</p>" + `<img src="https://openweathermap.org/img/wn/${response.list[i].weather[0].icon}@2x.png">` + "<p>" + "Temperature: " + response.list[i].main.temp + "</p>" + "<p>" + "Humidity: " + response.list[i].main.humidity + "%" + "</p>" + "</div>");
+
+
+            })
+
+        });
+
+
+
+
+
+
     }
 })
+
+
+
+
+
 
 
 
@@ -104,9 +151,10 @@ $(document).ready(function () {
 //     var queryParams.q = $("")
 //     var forecastQueryURL = "http://api.openweathermap.org/data/2.5/forecast?q=austin&appid=9eb51aba9e5654b6e1bc5b9934efaba8&units=imperial"
 
+
 //     //data api
 //     var dataQueryURL = "http://api.openweathermap.org/data/2.5/uvi?appid=9eb51aba9e5654b6e1bc5b9934efaba8&lat=response.coord.lat&lon=response.coord.lon";
-
+//     "austin&appid=9eb51aba9e5654b6e1bc5b9934efaba8&units=imperial"
 
 
 
@@ -134,3 +182,4 @@ $(document).ready(function () {
 
 //getting weather api from longitude and latitude coordinates
 
+    
